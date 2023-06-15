@@ -1,0 +1,75 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Acme',sans-serif;
+   }
+  .main-parent{
+    height: 80vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } 
+  .main-parent .form-wrap{
+    width: 450px;
+    /* background: rgba(255, 255, 255, 0.147); */
+    background-color: #b0a8a3;
+    border-radius: 10px;
+    padding: 35px 40px;
+    backdrop-filter: blur(5px);
+  }
+  .main-parent .form-wrap h1{
+    color:#fc6107;
+    font-variant: small-caps;
+    font-size: 45px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .main-parent .form-wrap h1 span{
+    color: #fc6107;
+  } 
+  .main-parent .form-wrap .single-input input{
+    width: 100%;
+    padding: 5px 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    outline:none;
+    background-color:transparent;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-family:'Roboto',sans-serif;
+  }
+  .Submit-button
+  {
+    text-align:right;
+  }
+  .Submit-button button{
+    padding: 13px 30px;
+    background-color: #4c3ee0;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-family:'Roboto',sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .Submit-button button:hover{
+    background-color: rgb(33, 53, 87);
+    border-radius: 10px;
+  }
+  .account-have{
+    font-size:16px;
+    margin-top:-30px;
+  }
+  .account-have a{
+    color: rgb(0, 0, 0);
+    text-decoration:underline;
+    font-family: 'Roboto',sans-serif;
+    margin-left: 10px;
+  }
+  a{
+    cursor: pointer;
+  }

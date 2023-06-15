@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Roboto:wght@300&display=swap');
+body{
+    background-color:rgb(70, 199, 216);
+    /* background-image: url(../src/assets/forest.jpg); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}

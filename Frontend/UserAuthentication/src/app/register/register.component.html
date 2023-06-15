@@ -1,0 +1,42 @@
+<form  (ngSubmit)="id?update():userReg()">
+<div class="main-parent SIGNUP">
+    <div class="form-wrap">
+        <h2>{{id?'User Update':'User Registration'}}</h2>
+        <div class="single-input">
+          <label>First Name:</label>
+            <input type="text"  [(ngModel)]="user.firstName" name="firstName"  placeholder="First Name">
+        </div> 
+        <div class="single-input">
+          <label>Last Name: </label>     
+            <input type="text" [(ngModel)]="user.lastName" name="lastName" placeholder="Last Name">       
+        </div>
+        <div class="single-input">
+          <label>Email:</label>          
+            <input type="email"  [(ngModel)]="user.email" name="email" placeholder="Email Address" [disabled]="id?true:false">        
+        </div>
+        <div class="single-input">
+          <label>Address:</label>           
+         <input type="text" [(ngModel)]="user.address" name="address"placeholder="Address">       
+        </div>
+          <div class="single-input" *ngIf="!id">
+            <label>Password:</label>     
+              <input type="password" [(ngModel)]="user.password" name="password" placeholder="Password">  
+          </div>
+          <div class="single-input" *ngIf="!id">
+            <label>Confirm Password:</label>           
+              <input type="password" [(ngModel)]="user.confirmPassword" name="confirmPassword" placeholder="Confirm Password">         
+          </div> 
+        
+        <div class="Submit-button">
+          <button type="submit">{{id?'Update':'Register'}}</button>
+        </div>
+        <div class="Submit-button back">
+          <button (click)="cancelUpdate()" *ngIf="id">Back</button>
+        </div>
+        
+        <div class="account-have" *ngIf="!id">
+          <p>Already have an account? <a routerLink="/login">Sign In</a></p>
+        </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,49 @@
+<div class="userlist hideuser">
+  <div class="header">
+      <div class="main-header" (click)="home()">User <span>List</span> </div>
+      <button (click)="logout()">Logout</button>
+    </div>
+    
+        <table
+         class="centered-table" name="sample" id="sample">
+           <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Address</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of userService.userDB">
+            <tr>
+              <td>{{item.firstName}}</td> 
+              <td>{{item.lastName}}</td>
+              <td>{{item.address}}</td>
+              <td>{{item.email}}</td>
+              <td>
+                <div class="action-button">
+                  <div class="view-button">
+                    <button (click)="viewUser(item)">View</button>
+                  </div>
+                  <div class="edit-button">
+                    <button (click)="editUser(item.email)">Edit</button>
+                  </div>
+                  <div class="delete-button">
+                  <button (click)="deleteUser(item)">Delete</button>
+                </div> 
+              </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+<!-- Display user details when selected -->
+<div class="view-container" *ngIf="selectedUser">
+  <span class="close-button" (click)="selectedUser=null">&times;</span>
+  <h2>User Details</h2>
+  <p>First Name: {{ selectedUser.firstName }}</p>
+  <p>Last Name: {{ selectedUser.lastName }}</p>
+  <p>Email: {{ selectedUser.email }}</p>
+  <p>Address: {{ selectedUser.address }}</p>
+</div>
