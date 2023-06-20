@@ -3,7 +3,6 @@
       <div class="main-header" (click)="home()">User <span>List</span> </div>
       <button (click)="logout()">Logout</button>
     </div>
-    
         <table
          class="centered-table" name="sample" id="sample">
            <thead>
@@ -15,22 +14,22 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody *ngFor="let item of userService.userDB">
+          <tbody *ngFor="let user of user">
             <tr>
-              <td>{{item.firstName}}</td> 
-              <td>{{item.lastName}}</td>
-              <td>{{item.address}}</td>
-              <td>{{item.email}}</td>
+              <td>{{user.firstName}}</td> 
+              <td>{{user.lastName}}</td>
+              <td>{{user.address}}</td>
+              <td>{{user.email}}</td>
               <td>
                 <div class="action-button">
                   <div class="view-button">
-                    <button (click)="viewUser(item)">View</button>
+                    <button (click)="viewUser(user)">View</button>
                   </div>
                   <div class="edit-button">
-                    <button (click)="editUser(item.email)">Edit</button>
+                    <button (click)="editUser(user.email)">Edit</button>
                   </div>
                   <div class="delete-button">
-                  <button (click)="deleteUser(item)">Delete</button>
+                  <button (click)="deleteUser(user.email)">Delete</button>
                 </div> 
               </div>
               </td>
