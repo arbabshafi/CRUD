@@ -1,46 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserserviceService } from '../Service/userservice.service';
-import { json } from 'express';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
-  user: any = { firstName: '', lastName: '', email: '', address: '', password: '', confirmPassword: '', };
-  id: string | null
-  constructor(private router: Router, private userservice: UserserviceService, private activatedroute: ActivatedRoute) { }
+export class RegisterComponent implements OnInit {
+  user: any = {firstName: '',lastName: '',email: '',address: '',password: '',confirmPassword: ''};
+  id: string | null;
+  constructor(private router: Router,private userservice: UserserviceService,private activatedroute: ActivatedRoute) {}
   ngOnInit() {
-    this.id = this.activatedroute.snapshot.queryParamMap.get('ID')
+    this.id = this.activatedroute.snapshot.queryParamMap.get('ID');
     this.userservice.getUserByEmail(this.id).subscribe((res: any) => {
       this.user = res;
-    })
+    });
   }
   userReg() {
     this.userservice.addUser(this.user).subscribe((res: any) => {
       if (res.status == 201) {
-        alert(res.msg)
-        this.router.navigateByUrl('/login')
+        Swal.fire('Success', res.msg, 'success'); // Replace alert with swal
+        this.router.navigateByUrl('/login');
+      } else if (res.status == 409) {
+        Swal.fire('Error', res.msg, 'error'); // Replace alert with swal
+      } else {
+        Swal.fire('Error', res.msg, 'error'); // Replace alert with swal
       }
-      else if (res.status == 409)
-        alert(res.msg)
-      else {
-        alert(res.msg)
-      }
-    })
+    });
   }
   cancelUpdate() {
-  this.router.navigateByUrl('/usertable')
+    this.router.navigateByUrl('/usertable');
   }
   update() {
-    this.userservice.updateUser(this.user,this.user.email).subscribe((res: any) => {
+    this.userservice.updateUser(this.user, this.user.email).subscribe((res: any) => {
       if (res.status === 200) {
-        alert('User has been updated');
+        Swal.fire('Success',res.msg,'success')
         this.router.navigateByUrl('/usertable');
       } else if (res.status === 404) {
-        alert('User not found');
-      }      
+        Swal.fire('Error', 'User not found', 'error'); // Replace alert with swal
+      }
     });
   }
 }

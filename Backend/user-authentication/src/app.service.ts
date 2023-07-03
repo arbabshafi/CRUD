@@ -1,10 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User, UserDocument } from './user.schema';
 
 @Injectable()
 export class AppService {
-public userDB:any[]=[
-    {firstName:'Arbab',lastName:'Shafi',email:'arbabshafi81@gmail.com',address:'Pampore',password:'a',confirmPassword:'a'},
-    {firstName:'Farhaz',lastName:'Shafi',email:'farhazshafi81@gmail.com',address:'Srinagar',password:'a',confirmPassword:'a'},
-    {firstName:'Lubna',lastName:'Shafi',email:'lubnashafi81@gmail.com',address:'Konibal',password:'a',confirmPassword:'a'},
-];
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+
+  async addUser(user: User): Promise<User> {
+    const newUser = new this.userModel(user);
+    return newUser.save();
+  }
+
+  async updateUser(email: string, user: User): Promise<User> {
+    return this.userModel.findOneAndUpdate({ email }, user, { new: true });
+  }
+
+  async deleteUser(email: string): Promise<User> {
+    return this.userModel.findOneAndRemove({ email });
+  }
+
+  async getUserByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({ email });
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return this.userModel.find();
+  }
 }

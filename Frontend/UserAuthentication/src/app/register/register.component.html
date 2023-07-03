@@ -26,14 +26,12 @@
             <label>Confirm Password:</label>           
               <input type="password" [(ngModel)]="user.confirmPassword" name="confirmPassword" placeholder="Confirm Password">         
           </div> 
-        
         <div class="Submit-button">
           <button type="submit">{{id?'Update':'Register'}}</button>
         </div>
         <div class="Submit-button back">
           <button (click)="cancelUpdate()" *ngIf="id">Back</button>
         </div>
-        
         <div class="account-have" *ngIf="!id">
           <p>Already have an account? <a routerLink="/login">Sign In</a></p>
         </div>

@@ -1,60 +1,50 @@
 import { Controller, Get, Post, Delete, Put, Param, Body } from '@nestjs/common';
 import { AppService } from './app.service';
-import { user } from './app.model';
+import { User } from './user.schema';
+
 @Controller('userauthentication')
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
   @Post('/login/:email')
-  getUser(@Body() user: any) {
-    const Login = this.appService.userDB.some((u) => u.email === user.email && u.password == user.password);
-    if (Login) {
-      return { status: 200, msg: "Login Success" }
-    }
-    else {
-      return { status: 401, msg: "Invalid Credentials" }
+  async getUser(@Body() user: any) {
+    const dbUser = await this.appService.getUserByEmail(user.email);
+    if (dbUser && dbUser.password === user.password) {
+      return { status: 200, msg: 'Login Success' };
+    } else {
+      return { status: 401, msg: 'Invalid Credentials' };
     }
   }
   @Post('/register')
-  addUser(@Body() user: user) {
-    const isUserRegistered = this.appService.userDB.some((u: any) => u.email == user.email)
+  async addUser(@Body() user: User) {
+    const isUserRegistered = await this.appService.getUserByEmail(user.email);
     if (isUserRegistered) {
-      return { status: 409, msg: "User already registered" }
-    }
-    else if (user.password === user.confirmPassword) {
-      this.appService.userDB.push(user);
-      return { status: 201, msg: "User added successfully" }
-    }
-    else {
-      return { status: 403, msg: "Incorrect confirm Password" }
+      return { status: 409, msg: 'User already registered' };
+    } else if (user.password === user.confirmPassword) {
+      await this.appService.addUser(user);
+      return { status: 201, msg: 'User added successfully' };
+    } else {
+      return { status: 403, msg: 'Incorrect confirm Password' };
     }
   }
   @Put('/update/:email')
-  updateUser(@Param('email') email: string, @Body() user: any): { status: number; msg: string } {
-     const index=this.appService.userDB.findIndex((currentuser)=>{
-      return currentuser.email==email
-     })
-    this.appService.userDB.splice(index,1,user)
-    return {status:200, msg:"Testing"}
+  async updateUser(@Param('email') email: string, @Body() user: User) {
+    await this.appService.updateUser(email, user);
+    return { status: 200, msg: 'User has been updated successfully!' };
   }
   @Delete('/delete/:email')
-  deleteUser(@Param('email') email: string) {
-    const index = this.appService.userDB.findIndex(user => user.email === email);
-    if (index !== -1) {
-      this.appService.userDB.splice(index, 1);
-      return { status: 202, msg: 'User has been deleted!' };
-    } else {
-      return { status: 404, msg: 'User not found!' };
-    }
+  async deleteUser(@Param('email') email: string) {
+    await this.appService.deleteUser(email);
+    return { status: 202, msg: 'User has been deleted!' };
   }
   @Get('/users')
-  getAllUsers() {
-    return this.appService.userDB;
+  async getAllUsers() {
+    const users = await this.appService.getAllUsers();
+    return users;
   }
+
   @Get('/getuser/:email')
-  getUserByEmail(@Param('email') email: string) {
-    const user = this.appService.userDB.find((currentUser) => {
-      return currentUser.email === email;
-    });
+  async getUserByEmail(@Param('email') email: string) {
+    const user = await this.appService.getUserByEmail(email);
     if (user) {
       return user;
     } else {
