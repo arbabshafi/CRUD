@@ -18,9 +18,12 @@ export class UsertableComponent implements OnInit {
     });
   }
   deleteUser(email: any) {
-    Swal.fire({
+    let userToDelete='';
+    this.userService.getUserByEmail(email).subscribe((res:any)=>{
+     userToDelete=res.firstName+" "+res.lastName;
+     Swal.fire({
       title: 'Confirmation',
-      text: 'Are you sure you want to delete this user?',
+      text: `Are you sure you want to delete ${userToDelete}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -29,7 +32,7 @@ export class UsertableComponent implements OnInit {
       if (result.isConfirmed) {
         this.userService.deleteUser(email).subscribe((res: any) => {
           if (res.status == 202) {
-            Swal.fire('Success', res.msg, 'success');
+            Swal.fire('Success', userToDelete+res.msg, 'success');
             this.ngOnInit();
           } else {
             Swal.fire('Error', res.msg, 'error');
@@ -37,6 +40,8 @@ export class UsertableComponent implements OnInit {
         });
       }
     });
+    }
+    );
   }
   editUser(email: string) {
     this.router.navigate(['/update'], { queryParams: { ID: email } });

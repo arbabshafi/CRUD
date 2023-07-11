@@ -34,7 +34,7 @@ export class AppController {
   @Delete('/delete/:email')
   async deleteUser(@Param('email') email: string) {
     await this.appService.deleteUser(email);
-    return { status: 202, msg: 'User has been deleted!' };
+    return { status: 202, msg: ' has been deleted!' };
   }
   @Get('/users')
   async getAllUsers() {

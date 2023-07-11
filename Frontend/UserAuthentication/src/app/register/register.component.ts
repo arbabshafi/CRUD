@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
   user: any = {firstName: '',lastName: '',email: '',address: '',password: '',confirmPassword: ''};
@@ -14,19 +14,19 @@ export class RegisterComponent implements OnInit {
   constructor(private router: Router,private userservice: UserserviceService,private activatedroute: ActivatedRoute) {}
   ngOnInit() {
     this.id = this.activatedroute.snapshot.queryParamMap.get('ID');
-    this.userservice.getUserByEmail(this.id).subscribe((res: any) => {
+    this.userservice.getUserByEmail(this.id).subscribe((res: any) =>{
       this.user = res;
     });
   }
   userReg() {
     this.userservice.addUser(this.user).subscribe((res: any) => {
       if (res.status == 201) {
-        Swal.fire('Success', res.msg, 'success'); // Replace alert with swal
+        Swal.fire('Success', res.msg, 'success'); 
         this.router.navigateByUrl('/login');
       } else if (res.status == 409) {
-        Swal.fire('Error', res.msg, 'error'); // Replace alert with swal
+        Swal.fire('Error', res.msg, 'error'); 
       } else {
-        Swal.fire('Error', res.msg, 'error'); // Replace alert with swal
+        Swal.fire('Error', res.msg, 'error'); 
       }
     });
   }
@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
         Swal.fire('Success',res.msg,'success')
         this.router.navigateByUrl('/usertable');
       } else if (res.status === 404) {
-        Swal.fire('Error', 'User not found', 'error'); // Replace alert with swal
+        Swal.fire('Error', 'User not found', 'error'); 
       }
     });
   }

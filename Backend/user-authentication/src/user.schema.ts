@@ -33,4 +33,3 @@ export interface User {
   confirmPassword: string;
 }
 export interface UserDocument extends User, Document {}
-
